@@ -17,7 +17,7 @@ class _LauncherPageState extends State<LauncherPage>
   late Animation<double> animation;
 
   startTime() async {
-    var duration = const Duration(seconds: 3);
+    var duration = const Duration(seconds: 4);
     return Timer(duration, navigationPage);
   }
 
@@ -29,7 +29,7 @@ class _LauncherPageState extends State<LauncherPage>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 2));
+        AnimationController(vsync: this, duration: const Duration(seconds: 3));
     animation =
         CurvedAnimation(parent: animationController, curve: Curves.easeOut);
     animation.addListener(() => setState(() {}));
@@ -57,11 +57,10 @@ class _LauncherPageState extends State<LauncherPage>
                 const Text('Welcome to our Platform'),
                 const Padding(padding: EdgeInsets.all(8)),
                 Image.asset(
-                  'images/logo.jpg',
+                  'image/logo.jpg',
                   width: animation.value * 200,
                   height: animation.value * 200,
                 ),
-                const Text('Money' 'Mate')
               ],
             )
           ],
