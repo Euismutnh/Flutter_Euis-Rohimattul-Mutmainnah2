@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'constant/constant.dart';
 
@@ -16,11 +15,6 @@ class _LauncherPageState extends State<LauncherPage>
   late AnimationController animationController;
   late Animation<double> animation;
 
-  startTime() async {
-    var duration = const Duration(seconds: 4);
-    return Timer(duration, navigationPage);
-  }
-
   void navigationPage() {
     Navigator.of(context).pushReplacementNamed(HOME_SCREEN);
   }
@@ -34,20 +28,23 @@ class _LauncherPageState extends State<LauncherPage>
         CurvedAnimation(parent: animationController, curve: Curves.easeOut);
     animation.addListener(() => setState(() {}));
     animationController.forward();
-    setState(() {
-      _visible = !_visible;
-    });
 
-    startTime();
+    // Menggunakan Future.delayed untuk menunggu animasi selesai sebelum navigasi
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _visible = !_visible;
+      });
+      navigationPage();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(1, 246, 246, 233),
+      backgroundColor: const Color.fromARGB(255, 246, 246, 233),
       body: Container(
         decoration:
-            const BoxDecoration(color: Color.fromARGB(1, 246, 246, 233)),
+            const BoxDecoration(color: Color.fromARGB(255, 246, 246, 233)),
         child: Stack(
           fit: StackFit.expand,
           children: [
@@ -57,7 +54,7 @@ class _LauncherPageState extends State<LauncherPage>
                 const Text('Welcome to our Platform'),
                 const Padding(padding: EdgeInsets.all(8)),
                 Image.asset(
-                  'image/logo.jpg',
+                  'image/logo.jpg.png',
                   width: animation.value * 200,
                   height: animation.value * 200,
                 ),
@@ -67,5 +64,11 @@ class _LauncherPageState extends State<LauncherPage>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 }
