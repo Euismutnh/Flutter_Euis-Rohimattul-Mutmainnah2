@@ -23,14 +23,14 @@ class _LauncherPageState extends State<LauncherPage>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(vsync: this, duration: const Duration(seconds: 3));
+        AnimationController(vsync: this, duration: const Duration(seconds: 4));
     animation =
         CurvedAnimation(parent: animationController, curve: Curves.easeOut);
     animation.addListener(() => setState(() {}));
     animationController.forward();
 
     // Menggunakan Future.delayed untuk menunggu animasi selesai sebelum navigasi
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _visible = !_visible;
       });
@@ -54,9 +54,9 @@ class _LauncherPageState extends State<LauncherPage>
                 const Text('Welcome to our Platform'),
                 const Padding(padding: EdgeInsets.all(8)),
                 Image.asset(
-                  'image/logo.jpg.png',
-                  width: animation.value * 200,
-                  height: animation.value * 200,
+                  'assets/logo.png',
+                  width: animation.value * 300,
+                  height: animation.value * 400,
                 ),
               ],
             )

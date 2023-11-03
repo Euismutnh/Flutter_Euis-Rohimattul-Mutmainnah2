@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'home.dart';
 import 'registration.dart';
 
@@ -37,23 +36,19 @@ class _LoginState extends State<Login> {
       setState(() {
         _apiCall = true;
       });
-
-      // Contoh simulasi pemanggilan API (gantilah dengan pemanggilan API yang sesungguhnya)
       Future.delayed(const Duration(seconds: 2), () {
         // Setelah selesai pemanggilan API, atur _apiCall kembali ke false
         setState(() {
           _apiCall = false;
         });
-        // Simulasi berhasil Sign In
-        bool signInSuccess =
-            true; // Gantilah dengan logika autentikasi yang sesungguhnya
+        bool signInSuccess = true;
         if (signInSuccess) {
-          // Arahkan ke halaman HomePage
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const HomePage()));
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+          );
           // ignore: dead_code
         } else {
-          // Tampilkan pesan kesalahan jika login gagal
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Sign In Gagal'),
@@ -81,7 +76,12 @@ class _LoginState extends State<Login> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(height: 20),
+              Image.asset(
+                'assets/logo.png',
+                width: 180,
+                height: 270,
+              ),
+              const SizedBox(height: 1),
               Form(
                 key: _formKey,
                 child: Column(
@@ -89,10 +89,21 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       controller: _usernameController,
                       decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: "Username",
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 23, 103, 26)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 23, 103, 26)),
+                        ),
+                        hintText: "Insert Your Username",
+                        labelText: "Username",
+                        labelStyle: TextStyle(
+                          color: Color.fromARGB(255, 23, 103, 26),
+                        ),
                         hintStyle:
-                            TextStyle(color: Colors.black, fontSize: 12.0),
+                            TextStyle(color: Colors.grey, fontSize: 12.0),
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -106,10 +117,21 @@ class _LoginState extends State<Login> {
                       controller: _passwordController,
                       obscureText: _obscureText,
                       decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        hintText: "Password",
-                        hintStyle: const TextStyle(
-                            color: Colors.black, fontSize: 12.0),
+                        focusedBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 23, 103, 26)),
+                        ),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Color.fromARGB(255, 23, 103, 26)),
+                        ),
+                        hintText: "Insert Password",
+                        labelText: "Password",
+                        labelStyle: const TextStyle(
+                          color: Color.fromARGB(255, 23, 103, 26),
+                        ),
+                        hintStyle:
+                            const TextStyle(color: Colors.grey, fontSize: 12.0),
                         suffixIcon: IconButton(
                           onPressed: _togglePasswordVisibility,
                           icon: Icon(
@@ -126,22 +148,65 @@ class _LoginState extends State<Login> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 10),
-                    ElevatedButton(
-                      onPressed: _apiCall ? null : _submitForm,
-                      child: const Text('Sign In'),
+                    const SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: _apiCall ? null : _submitForm,
+                      child: Container(
+                        width: 120,
+                        height: 40,
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color.fromARGB(255, 23, 103, 26),
+                        ),
+                        child: Center(
+                          child: _apiCall
+                              ? const CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.white),
+                                )
+                              : const Text(
+                                  'Sign In',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
+                      ),
                     ),
-                    const SizedBox(height: 5),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Arahkan ke halaman RegistrationPage
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    GestureDetector(
+                      onTap: () {
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegistrationPage()));
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RegistrationPage(),
+                          ),
+                        );
                       },
-                      child: const Text('Sign Up'),
+                      child: Container(
+                        width: 120,
+                        height: 40,
+                        margin: const EdgeInsets.symmetric(horizontal: 50),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          color: const Color.fromARGB(255, 23, 103, 26),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
