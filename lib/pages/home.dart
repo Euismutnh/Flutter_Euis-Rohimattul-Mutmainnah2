@@ -1,11 +1,12 @@
 import 'package:calendar_appbar/calendar_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:money_mate/pages/note.dart';
 import 'package:money_mate/pages/profile.dart';
 import 'package:logger/logger.dart';
 
-import '../Menu/outcome.dart';
+import '../Menu/expense.dart';
 import '../Menu/debt.dart';
 import '../Menu/income.dart';
 import '../Menu/planning.dart';
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
 
   final List<String> imageList = [
     'Income',
-    'Outcome',
+    'Expense',
     'Debt',
     'Planning',
   ];
@@ -76,6 +77,71 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Icon(
+                        Icons.download,
+                        color: Color.fromARGB(255, 23, 103, 26),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Income",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white, fontSize: 12)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text("Rp. 10.300.000",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white, fontSize: 14))
+                      ],
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8)),
+                      child: const Icon(
+                        Icons.upload,
+                        color: Colors.red,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Expense",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white, fontSize: 12)),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Text("Rp. 2.300.000",
+                            style: GoogleFonts.montserrat(
+                                color: Colors.white, fontSize: 14))
+                      ],
+                    )
+                  ],
+                ),
+              ],
+            ),
             GridView.builder(
               itemCount: imageList.length,
               shrinkWrap: true,
@@ -90,28 +156,24 @@ class _HomePageState extends State<HomePage> {
                 return InkWell(
                   onTap: () {
                     if (index == 0) {
-                      // Arahkan ke halaman DebtPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const DebtPage()),
                       );
                     } else if (index == 1) {
-                      // Arahkan ke halaman PlanningPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const PlanningPage()),
                       );
                     } else if (index == 2) {
-                      // Arahkan ke halaman IncomePage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const IncomePage()),
                       );
                     } else if (index == 3) {
-                      // Arahkan ke halaman ExpensesPage
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -176,16 +238,11 @@ class _HomePageState extends State<HomePage> {
             setState(() {
               _currentIndex = index;
               if (index == 0) {
-                // Arahkan ke halaman NotePage
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const NotePage()),
                 );
-              } else if (index == 1) {
-                // Arahkan ke halaman HomePage
-                // Tidak perlu navigasi ke halaman yang sedang ditampilkan
               } else if (index == 2) {
-                // Arahkan ke halaman ProfilePage
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ProfilePage()),
