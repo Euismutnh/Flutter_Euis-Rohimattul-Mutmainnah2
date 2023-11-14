@@ -1,14 +1,13 @@
-
 import 'package:flutter/material.dart';
 
-class OutcomePage extends StatefulWidget {
-  const OutcomePage({super.key});
+class ExpensePage extends StatefulWidget {
+  const ExpensePage({super.key});
 
   @override
-  State<OutcomePage> createState() => _OutcomePageState();
+  State<ExpensePage> createState() => _ExpensePageState();
 }
 
-class _OutcomePageState extends State<OutcomePage> {
+class _ExpensePageState extends State<ExpensePage> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder();

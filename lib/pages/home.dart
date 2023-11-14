@@ -77,70 +77,80 @@ class _HomePageState extends State<HomePage> {
                 );
               }).toList(),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                    color: Colors.grey[800],
+                    borderRadius: BorderRadius.circular(16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Icon(
-                        Icons.download,
-                        color: Color.fromARGB(255, 23, 103, 26),
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text("Income",
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white, fontSize: 12)),
-                        const SizedBox(
-                          height: 10,
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const Icon(
+                            Icons.download,
+                            color: Color.fromARGB(255, 23, 103, 26),
+                          ),
                         ),
-                        Text("Rp. 10.300.000",
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white, fontSize: 14))
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Income",
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white, fontSize: 12)),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text("Rp. 10.300.000",
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white, fontSize: 14))
+                          ],
+                        )
                       ],
-                    )
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8)),
+                          child: const Icon(
+                            Icons.upload,
+                            color: Colors.red,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 15,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Expense",
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white, fontSize: 12)),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            Text("Rp. 2.300.000",
+                                style: GoogleFonts.montserrat(
+                                    color: Colors.white, fontSize: 14))
+                          ],
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8)),
-                      child: const Icon(
-                        Icons.upload,
-                        color: Colors.red,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Expense",
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white, fontSize: 12)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text("Rp. 2.300.000",
-                            style: GoogleFonts.montserrat(
-                                color: Colors.white, fontSize: 14))
-                      ],
-                    )
-                  ],
-                ),
-              ],
+              ),
             ),
             GridView.builder(
               itemCount: imageList.length,
