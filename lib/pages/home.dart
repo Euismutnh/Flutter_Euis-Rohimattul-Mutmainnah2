@@ -6,10 +6,7 @@ import 'package:money_mate/pages/note.dart';
 import 'package:money_mate/pages/profile.dart';
 import 'package:logger/logger.dart';
 
-import '../Menu/expense_page.dart';
-import '../Menu/debt.dart';
-import '../Menu/income.dart';
-import '../Menu/planning.dart';
+import '../constant/constant.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -166,29 +163,13 @@ class _HomePageState extends State<HomePage> {
                 return InkWell(
                   onTap: () {
                     if (index == 0) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const DebtPage()),
-                      );
+                      Navigator.pushNamed(context, INCOME_PAGE);
                     } else if (index == 1) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const PlanningPage()),
-                      );
+                      Navigator.pushNamed(context, EXPENSE_PAGE);
                     } else if (index == 2) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const IncomePage()),
-                      );
+                      Navigator.pushNamed(context, DEBT_PAGE);
                     } else if (index == 3) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ExpensePage()),
-                      );
+                      Navigator.pushNamed(context, PLANNING_PAGE);
                     }
                   },
                   child: Container(
