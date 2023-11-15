@@ -6,7 +6,7 @@ import 'package:money_mate/pages/note.dart';
 import 'package:money_mate/pages/profile.dart';
 import 'package:logger/logger.dart';
 
-import '../Menu/expense.dart';
+import '../Menu/expense_page.dart';
 import '../Menu/debt.dart';
 import '../Menu/income.dart';
 import '../Menu/planning.dart';
@@ -187,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const OutcomePage()),
+                            builder: (context) => const ExpensePage()),
                       );
                     }
                   },

@@ -5,6 +5,11 @@ import 'package:money_mate/pages/login.dart';
 import 'package:money_mate/pages/home.dart';
 import 'package:money_mate/pages/registration.dart';
 
+import 'Menu/debt.dart';
+import 'Menu/expense_page.dart';
+import 'Menu/income.dart';
+import 'Menu/planning.dart';
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
@@ -17,6 +22,10 @@ void main() {
       HOME_SCREEN: (BuildContext context) => const Login(),
       REGISTRATION_SCREEN: (BuildContext context) => const RegistrationPage(),
       HOME_PAGE: (BuildContext context) => const HomePage(),
+      DEBT_PAGE: (BuildContext context) => const DebtPage(),
+      PLANNING_PAGE: (BuildContext context) => const PlanningPage(),
+      INCOME_PAGE: (BuildContext context) => const IncomePage(),
+      EXPENSE_PAGE: (BuildContext context) => const ExpensePage(),
     },
   ));
 }
