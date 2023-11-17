@@ -230,7 +230,6 @@ class _IncomePageState extends State<IncomePage> {
                                   selectedCategory == null ||
                                   selectedCategory!.isEmpty ||
                                   amountController.text.isEmpty) {
-                                // Validation failed
                                 return;
                               }
 
@@ -299,8 +298,7 @@ class _IncomePageState extends State<IncomePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start, // Added this line
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           width: 50,
@@ -359,9 +357,7 @@ class _IncomePageState extends State<IncomePage> {
                                 Icons.edit,
                                 color: Colors.white,
                               ),
-                              onPressed: () {
-                                // Add logic to edit expenses
-                              },
+                              onPressed: () {},
                             ),
                             const SizedBox(width: 8.0),
                             IconButton(
@@ -370,7 +366,6 @@ class _IncomePageState extends State<IncomePage> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                // Use the provider method to remove expense
                                 incomeData.removeIncome(income);
                               },
                             ),
