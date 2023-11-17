@@ -31,6 +31,7 @@ class _PlanningPageState extends State<PlanningPage> {
   @override
   Widget build(BuildContext context) {
     final planningData = Provider.of<PlanningData>(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 246, 233),
       appBar: AppBar(

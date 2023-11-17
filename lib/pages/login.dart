@@ -2,12 +2,6 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'registration.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    home: Login(),
-  ));
-}
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -17,7 +11,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _obscureText = true;
   bool _apiCall = false;
@@ -28,40 +22,47 @@ class _LoginState extends State<Login> {
     });
   }
 
-  void _submitForm() {
-    var username = _usernameController.text;
+  Future<bool> validateLogin(String email, String password) async {
+    return email == "euisrohimattul@gmail.com" && password == "SayangAku";
+  }
+
+  void _submitForm() async {
+    var email = _emailController.text;
     var password = _passwordController.text;
 
     if (_formKey.currentState!.validate()) {
       setState(() {
         _apiCall = true;
       });
-      Future.delayed(const Duration(seconds: 2), () {
-        // Setelah selesai pemanggilan API, atur _apiCall kembali ke false
-        setState(() {
-          _apiCall = false;
-        });
-        bool signInSuccess = true;
-        if (signInSuccess) {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-          );
-          // ignore: dead_code
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Sign In Gagal'),
-            ),
-          );
-        }
+
+      // Setelah selesai pemanggilan API, atur _apiCall kembali ke false
+      setState(() {
+        _apiCall = false;
       });
+
+      // Query ke database untuk mencocokkan email dan password
+      bool signInSuccess = await validateLogin(email, password);
+
+      if (signInSuccess) {
+        // ignore: use_build_context_synchronously
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else {
+        // ignore: use_build_context_synchronously
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed Sign In'),
+          ),
+        );
+      }
     }
   }
 
   @override
   void dispose() {
-    _usernameController.dispose();
+    _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
@@ -87,7 +88,7 @@ class _LoginState extends State<Login> {
                 child: Column(
                   children: [
                     TextFormField(
-                      controller: _usernameController,
+                      controller: _emailController,
                       decoration: const InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -97,8 +98,8 @@ class _LoginState extends State<Login> {
                           borderSide: BorderSide(
                               color: Color.fromARGB(255, 23, 103, 26)),
                         ),
-                        hintText: "Insert Your Username",
-                        labelText: "Username",
+                        hintText: "Insert Your Email",
+                        labelText: "Email",
                         labelStyle: TextStyle(
                           color: Color.fromARGB(255, 23, 103, 26),
                         ),
@@ -107,7 +108,7 @@ class _LoginState extends State<Login> {
                       ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Username is required';
+                          return 'Email is required';
                         }
                         return null;
                       },

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
+import '../constant/constant.dart';
 import 'home.dart';
 import 'note.dart';
 
@@ -20,11 +21,9 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          const Color.fromARGB(255, 246, 246, 233), // Warna latar belakang
+      backgroundColor: const Color.fromARGB(255, 246, 246, 233),
       body: Column(
         children: <Widget>[
-          // Bagian pertama dengan latar belakang hijau, shadow, dan border circular
           Center(
             child: Container(
               margin: const EdgeInsets.all(16),
@@ -74,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          // Bagian kedua dengan latar belakang abu-abu
           Container(
             color: const Color.fromARGB(255, 246, 246, 233),
             child: Column(
@@ -82,12 +80,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 ListTile(
                   leading: const Icon(
                     Icons.history,
-                    color: Colors.black, // Warna ikon
+                    color: Colors.black,
                   ),
                   title: Text(
                     'History',
                     style: GoogleFonts.roboto(
-                      color: Colors.black, // Warna teks
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -97,29 +95,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
                 const Divider(
                   height: 2,
-                  color: Color.fromARGB(
-                      255, 246, 246, 233), // Warna latar belakang fitur
+                  color: Color.fromARGB(255, 246, 246, 233),
                 ),
                 const SizedBox(
-                  height: 1.0, // Atur tinggi untuk garis batas
-                  width: double
-                      .infinity, // Atur lebar untuk garis batas agar sejajar dengan ListItem
+                  height: 1.0,
+                  width: double.infinity,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color:
-                          Color.fromARGB(255, 23, 103, 26), // Warna garis batas
+                      color: Color.fromARGB(255, 23, 103, 26),
                     ),
                   ),
                 ),
                 ListTile(
                   leading: const Icon(
                     Icons.settings,
-                    color: Colors.black, // Warna ikon
+                    color: Colors.black,
                   ),
                   title: Text(
                     'Settings',
                     style: GoogleFonts.roboto(
-                      color: Colors.black, // Warna teks
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
@@ -132,17 +127,15 @@ class _ProfilePageState extends State<ProfilePage> {
                     isSettingExpanded
                         ? Icons.arrow_drop_up
                         : Icons.arrow_drop_down,
-                    color: Colors.black, // Warna ikon dropdown
+                    color: Colors.black,
                   ),
                 ),
                 const SizedBox(
-                  height: 1.0, // Atur tinggi untuk garis batas
-                  width: double
-                      .infinity, // Atur lebar untuk garis batas agar sejajar dengan ListItem
+                  height: 1.0,
+                  width: double.infinity,
                   child: DecoratedBox(
                     decoration: BoxDecoration(
-                      color:
-                          Color.fromARGB(255, 23, 103, 26), // Warna garis batas
+                      color: Color.fromARGB(255, 23, 103, 26),
                     ),
                   ),
                 ),
@@ -156,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: Text(
                             'Edit Profile',
                             style: GoogleFonts.roboto(
-                              color: Colors.black, // Warna teks
+                              color: Colors.black,
                               fontSize: 16,
                             ),
                           ),
@@ -168,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: Text(
                             'Edit Motivation',
                             style: GoogleFonts.roboto(
-                              color: Colors.black, // Warna teks
+                              color: Colors.black,
                               fontSize: 16,
                             ),
                           ),
@@ -180,7 +173,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           title: Text(
                             'Account',
                             style: GoogleFonts.roboto(
-                              color: Colors.black, // Warna teks
+                              color: Colors.black,
                               fontSize: 16,
                             ),
                           ),
@@ -193,23 +186,44 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 const Divider(
                   height: 2,
-                  color: Color.fromARGB(
-                      255, 246, 246, 233), // Warna latar belakang fitur
+                  color: Color.fromARGB(255, 246, 246, 233),
                 ),
                 ListTile(
                   leading: const Icon(
                     Icons.info,
-                    color: Colors.black, // Warna ikon
+                    color: Colors.black,
                   ),
                   title: Text(
                     'About',
                     style: GoogleFonts.roboto(
-                      color: Colors.black, // Warna teks
+                      color: Colors.black,
                       fontSize: 16,
                     ),
                   ),
                   onTap: () {
                     // Aksi saat elemen "About" diklik
+                  },
+                ),
+                const Divider(
+                  height: 2,
+                  color: Color.fromARGB(255, 246, 246, 233),
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.logout,
+                    color: Colors.black,
+                  ),
+                  title: Text(
+                    'Logout',
+                    style: GoogleFonts.roboto(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
+                  onTap: () {
+                    // Aksi saat elemen "Logout" diklik
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                        HOME_SCREEN, (Route<dynamic> route) => false);
                   },
                 ),
               ],
