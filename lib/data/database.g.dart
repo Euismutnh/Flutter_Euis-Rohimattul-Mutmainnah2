@@ -567,13 +567,298 @@ class IncomesCompanion extends UpdateCompanion<Income> {
   }
 }
 
+class $PlanningsTable extends Plannings
+    with TableInfo<$PlanningsTable, Planning> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PlanningsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<DateTime> date = GeneratedColumn<DateTime>(
+      'createAt', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _categoryMeta =
+      const VerificationMeta('category');
+  @override
+  late final GeneratedColumn<int> category = GeneratedColumn<int>(
+      'category', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _amountMeta = const VerificationMeta('amount');
+  @override
+  late final GeneratedColumn<int> amount = GeneratedColumn<int>(
+      'amount', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _noteMeta = const VerificationMeta('note');
+  @override
+  late final GeneratedColumn<String> note = GeneratedColumn<String>(
+      'note', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [id, date, category, amount, note];
+  @override
+  String get aliasedName => _alias ?? 'plannings';
+  @override
+  String get actualTableName => 'plannings';
+  @override
+  VerificationContext validateIntegrity(Insertable<Planning> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('createAt')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['createAt']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
+    }
+    if (data.containsKey('category')) {
+      context.handle(_categoryMeta,
+          category.isAcceptableOrUnknown(data['category']!, _categoryMeta));
+    } else if (isInserting) {
+      context.missing(_categoryMeta);
+    }
+    if (data.containsKey('amount')) {
+      context.handle(_amountMeta,
+          amount.isAcceptableOrUnknown(data['amount']!, _amountMeta));
+    } else if (isInserting) {
+      context.missing(_amountMeta);
+    }
+    if (data.containsKey('note')) {
+      context.handle(
+          _noteMeta, note.isAcceptableOrUnknown(data['note']!, _noteMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Planning map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Planning(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      date: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}createAt'])!,
+      category: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}category'])!,
+      amount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}amount'])!,
+      note: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}note']),
+    );
+  }
+
+  @override
+  $PlanningsTable createAlias(String alias) {
+    return $PlanningsTable(attachedDatabase, alias);
+  }
+}
+
+class Planning extends DataClass implements Insertable<Planning> {
+  final int id;
+  final DateTime date;
+  final int category;
+  final int amount;
+  final String? note;
+  const Planning(
+      {required this.id,
+      required this.date,
+      required this.category,
+      required this.amount,
+      this.note});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['createAt'] = Variable<DateTime>(date);
+    map['category'] = Variable<int>(category);
+    map['amount'] = Variable<int>(amount);
+    if (!nullToAbsent || note != null) {
+      map['note'] = Variable<String>(note);
+    }
+    return map;
+  }
+
+  PlanningsCompanion toCompanion(bool nullToAbsent) {
+    return PlanningsCompanion(
+      id: Value(id),
+      date: Value(date),
+      category: Value(category),
+      amount: Value(amount),
+      note: note == null && nullToAbsent ? const Value.absent() : Value(note),
+    );
+  }
+
+  factory Planning.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Planning(
+      id: serializer.fromJson<int>(json['id']),
+      date: serializer.fromJson<DateTime>(json['date']),
+      category: serializer.fromJson<int>(json['category']),
+      amount: serializer.fromJson<int>(json['amount']),
+      note: serializer.fromJson<String?>(json['note']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'date': serializer.toJson<DateTime>(date),
+      'category': serializer.toJson<int>(category),
+      'amount': serializer.toJson<int>(amount),
+      'note': serializer.toJson<String?>(note),
+    };
+  }
+
+  Planning copyWith(
+          {int? id,
+          DateTime? date,
+          int? category,
+          int? amount,
+          Value<String?> note = const Value.absent()}) =>
+      Planning(
+        id: id ?? this.id,
+        date: date ?? this.date,
+        category: category ?? this.category,
+        amount: amount ?? this.amount,
+        note: note.present ? note.value : this.note,
+      );
+  @override
+  String toString() {
+    return (StringBuffer('Planning(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('category: $category, ')
+          ..write('amount: $amount, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, date, category, amount, note);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Planning &&
+          other.id == this.id &&
+          other.date == this.date &&
+          other.category == this.category &&
+          other.amount == this.amount &&
+          other.note == this.note);
+}
+
+class PlanningsCompanion extends UpdateCompanion<Planning> {
+  final Value<int> id;
+  final Value<DateTime> date;
+  final Value<int> category;
+  final Value<int> amount;
+  final Value<String?> note;
+  const PlanningsCompanion({
+    this.id = const Value.absent(),
+    this.date = const Value.absent(),
+    this.category = const Value.absent(),
+    this.amount = const Value.absent(),
+    this.note = const Value.absent(),
+  });
+  PlanningsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime date,
+    required int category,
+    required int amount,
+    this.note = const Value.absent(),
+  })  : date = Value(date),
+        category = Value(category),
+        amount = Value(amount);
+  static Insertable<Planning> custom({
+    Expression<int>? id,
+    Expression<DateTime>? date,
+    Expression<int>? category,
+    Expression<int>? amount,
+    Expression<String>? note,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (date != null) 'createAt': date,
+      if (category != null) 'category': category,
+      if (amount != null) 'amount': amount,
+      if (note != null) 'note': note,
+    });
+  }
+
+  PlanningsCompanion copyWith(
+      {Value<int>? id,
+      Value<DateTime>? date,
+      Value<int>? category,
+      Value<int>? amount,
+      Value<String?>? note}) {
+    return PlanningsCompanion(
+      id: id ?? this.id,
+      date: date ?? this.date,
+      category: category ?? this.category,
+      amount: amount ?? this.amount,
+      note: note ?? this.note,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (date.present) {
+      map['createAt'] = Variable<DateTime>(date.value);
+    }
+    if (category.present) {
+      map['category'] = Variable<int>(category.value);
+    }
+    if (amount.present) {
+      map['amount'] = Variable<int>(amount.value);
+    }
+    if (note.present) {
+      map['note'] = Variable<String>(note.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PlanningsCompanion(')
+          ..write('id: $id, ')
+          ..write('date: $date, ')
+          ..write('category: $category, ')
+          ..write('amount: $amount, ')
+          ..write('note: $note')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDb extends GeneratedDatabase {
   _$AppDb(QueryExecutor e) : super(e);
   late final $ExpensesTable expenses = $ExpensesTable(this);
   late final $IncomesTable incomes = $IncomesTable(this);
+  late final $PlanningsTable plannings = $PlanningsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities => [expenses, incomes];
+  List<DatabaseSchemaEntity> get allSchemaEntities =>
+      [expenses, incomes, plannings];
 }

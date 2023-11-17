@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:money_mate/models/income_data.dart';
 
 class IncomePage extends StatefulWidget {
-  const IncomePage({super.key});
+  const IncomePage({Key? key}) : super(key: key);
 
   @override
   State<IncomePage> createState() => _IncomePageState();
@@ -12,7 +14,6 @@ class _IncomePageState extends State<IncomePage> {
   TextEditingController amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController noteController = TextEditingController();
-  List<Map<String, dynamic>> expenses = [];
   String? selectedCategory;
 
   final List<String> categoryList = [
@@ -25,6 +26,8 @@ class _IncomePageState extends State<IncomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final incomeData = Provider.of<IncomeData>(context);
+
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 246, 233),
       appBar: AppBar(
@@ -233,22 +236,19 @@ class _IncomePageState extends State<IncomePage> {
 
                               String date = dateController.text;
                               String amount = amountController.text;
-                              String note = noteController.text; // Added note
-                              Map<String, dynamic> expense = {
+                              String note = noteController.text;
+                              Map<String, dynamic> income = {
                                 'date': _parseDate(date),
                                 'category': selectedCategory!,
                                 'amount': amount,
-                                'note': note, // Added note
+                                'note': note,
                               };
-                              setState(() {
-                                expenses.add(expense);
-                                expenses.sort(
-                                    (a, b) => b['date'].compareTo(a['date']));
-                              });
-                              // Clear inputs after submission
+
+                              incomeData.addIncome(income);
+
                               dateController.clear();
                               amountController.clear();
-                              noteController.clear(); // Clear note controller
+                              noteController.clear();
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -276,7 +276,7 @@ class _IncomePageState extends State<IncomePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: const [
                   Text(
-                    "List Expense",
+                    "List Income",
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -288,9 +288,9 @@ class _IncomePageState extends State<IncomePage> {
             const Divider(height: 24.0, thickness: 2.0),
             ListView.builder(
               shrinkWrap: true,
-              itemCount: expenses.length,
+              itemCount: incomeData.incomes.length,
               itemBuilder: (context, index) {
-                final expense = expenses[index];
+                final income = incomeData.incomes[index];
                 return Card(
                   elevation: 4,
                   margin: const EdgeInsets.only(bottom: 8.0),
@@ -299,58 +299,58 @@ class _IncomePageState extends State<IncomePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start, // Added this line
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 70,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  (index + 1).toString(),
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 23, 103, 26),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24,
-                                  ),
-                                ),
+                        Container(
+                          width: 50,
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              (index + 1).toString(),
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 23, 103, 26),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
                               ),
                             ),
-                            const SizedBox(width: 8.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Date: ${_formatDate(expense['date'])}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Date: ${_formatDate(income['date'])}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Category: ${expense['category']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Category: ${income['category']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Amount: ${expense['amount']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Amount: ${income['amount']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Note: ${expense['note']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Note: ${income['note']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                         Row(
                           children: [
@@ -370,9 +370,8 @@ class _IncomePageState extends State<IncomePage> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                setState(() {
-                                  expenses.remove(expense);
-                                });
+                                // Use the provider method to remove expense
+                                incomeData.removeIncome(income);
                               },
                             ),
                           ],

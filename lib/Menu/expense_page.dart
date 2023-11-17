@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:money_mate/models/expense_data.dart';
 
 class ExpensePage extends StatefulWidget {
   const ExpensePage({Key? key}) : super(key: key);
@@ -12,7 +14,6 @@ class _ExpensePageState extends State<ExpensePage> {
   TextEditingController amountController = TextEditingController();
   TextEditingController dateController = TextEditingController();
   TextEditingController noteController = TextEditingController();
-  List<Map<String, dynamic>> expenses = [];
   String? selectedCategory;
 
   final List<String> categoryList = [
@@ -29,6 +30,7 @@ class _ExpensePageState extends State<ExpensePage> {
 
   @override
   Widget build(BuildContext context) {
+    final expenseData = Provider.of<ExpenseData>(context);
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 246, 246, 233),
       appBar: AppBar(
@@ -237,22 +239,20 @@ class _ExpensePageState extends State<ExpensePage> {
 
                               String date = dateController.text;
                               String amount = amountController.text;
-                              String note = noteController.text; // Added note
+                              String note = noteController.text;
+
                               Map<String, dynamic> expense = {
                                 'date': _parseDate(date),
                                 'category': selectedCategory!,
                                 'amount': amount,
-                                'note': note, // Added note
+                                'note': note,
                               };
-                              setState(() {
-                                expenses.add(expense);
-                                expenses.sort(
-                                    (a, b) => b['date'].compareTo(a['date']));
-                              });
+                              expenseData.addExpense(expense);
+
                               // Clear inputs after submission
                               dateController.clear();
                               amountController.clear();
-                              noteController.clear(); // Clear note controller
+                              noteController.clear();
                             }
                           },
                           style: ElevatedButton.styleFrom(
@@ -290,11 +290,12 @@ class _ExpensePageState extends State<ExpensePage> {
               ),
             ),
             const Divider(height: 24.0, thickness: 2.0),
+            // Use the provider data for the expenses list
             ListView.builder(
               shrinkWrap: true,
-              itemCount: expenses.length,
+              itemCount: expenseData.expenses.length,
               itemBuilder: (context, index) {
-                final expense = expenses[index];
+                final expense = expenseData.expenses[index];
                 return Card(
                   elevation: 4,
                   margin: const EdgeInsets.only(bottom: 8.0),
@@ -303,58 +304,58 @@ class _ExpensePageState extends State<ExpensePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start, // Added this line
                       children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 50,
-                              height: 70,
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                child: Text(
-                                  (index + 1).toString(),
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 23, 103, 26),
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 24,
-                                  ),
-                                ),
+                        Container(
+                          width: 50,
+                          height: 70,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              (index + 1).toString(),
+                              style: const TextStyle(
+                                color: Color.fromARGB(255, 23, 103, 26),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 24,
                               ),
                             ),
-                            const SizedBox(width: 8.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "Date: ${_formatDate(expense['date'])}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                          ),
+                        ),
+                        const SizedBox(width: 8.0),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Date: ${_formatDate(expense['date'])}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Category: ${expense['category']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Category: ${expense['category']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Amount: ${expense['amount']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Amount: ${expense['amount']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  "Note: ${expense['note']}",
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                  ),
+                              ),
+                              Text(
+                                "Note: ${expense['note']}",
+                                style: const TextStyle(
+                                  color: Colors.white,
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
                         Row(
                           children: [
@@ -374,9 +375,8 @@ class _ExpensePageState extends State<ExpensePage> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                setState(() {
-                                  expenses.remove(expense);
-                                });
+                                // Use the provider method to remove expense
+                                expenseData.removeExpense(expense);
                               },
                             ),
                           ],
