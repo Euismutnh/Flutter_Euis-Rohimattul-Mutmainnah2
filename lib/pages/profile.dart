@@ -14,7 +14,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  int _currentIndex = 2; // Indeks berarti "Profile" pada BottomNavigationBar
+  int _currentIndex = 2;
   String formattedDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
   bool isSettingExpanded = false;
 
@@ -89,9 +89,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontSize: 16,
                     ),
                   ),
-                  onTap: () {
-                    // Aksi saat elemen "History" diklik
-                  },
+                  onTap: () {},
                 ),
                 const Divider(
                   height: 2,
@@ -153,9 +151,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 16,
                             ),
                           ),
-                          onTap: () {
-                            // Aksi saat elemen "Edit Profile" diklik
-                          },
+                          onTap: () {},
                         ),
                         ListTile(
                           title: Text(
@@ -165,9 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 16,
                             ),
                           ),
-                          onTap: () {
-                            // Aksi saat elemen "Edit Motivation" diklik
-                          },
+                          onTap: () {},
                         ),
                         ListTile(
                           title: Text(
@@ -177,9 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               fontSize: 16,
                             ),
                           ),
-                          onTap: () {
-                            // Aksi saat elemen "Account" diklik
-                          },
+                          onTap: () {},
                         ),
                       ],
                     ),
@@ -200,9 +192,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       fontSize: 16,
                     ),
                   ),
-                  onTap: () {
-                    // Aksi saat elemen "About" diklik
-                  },
+                  onTap: () {},
                 ),
                 const Divider(
                   height: 2,
@@ -221,7 +211,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   onTap: () {
-                    // Aksi saat elemen "Logout" diklik
                     Navigator.of(context).pushNamedAndRemoveUntil(
                         HOME_SCREEN, (Route<dynamic> route) => false);
                   },
@@ -251,13 +240,11 @@ class _ProfilePageState extends State<ProfilePage> {
           setState(() {
             _currentIndex = index;
             if (index == 0) {
-              // Arahkan ke halaman NotePage
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const NotePage()),
               );
             } else if (index == 1) {
-              // Arahkan ke halaman HomePage
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const HomePage()),
