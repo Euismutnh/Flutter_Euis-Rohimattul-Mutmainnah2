@@ -250,7 +250,6 @@ class _PlanningPageState extends State<PlanningPage> {
                               };
                               planningData.addPlanning(planning);
 
-                              // Clear inputs after submission
                               dateController.clear();
                               amountController.clear();
                               noteController.clear();
@@ -291,7 +290,6 @@ class _PlanningPageState extends State<PlanningPage> {
               ),
             ),
             const Divider(height: 24.0, thickness: 2.0),
-            // Gunakan data provider untuk daftar planning
             ListView.builder(
               shrinkWrap: true,
               itemCount: planningData.plannings.length,
@@ -305,8 +303,7 @@ class _PlanningPageState extends State<PlanningPage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start, // Ditambahkan baris ini
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           width: 50,
@@ -365,9 +362,7 @@ class _PlanningPageState extends State<PlanningPage> {
                                 Icons.edit,
                                 color: Colors.white,
                               ),
-                              onPressed: () {
-                                // Tambahkan logika untuk mengedit planning
-                              },
+                              onPressed: () {},
                             ),
                             const SizedBox(width: 8.0),
                             IconButton(
@@ -376,7 +371,6 @@ class _PlanningPageState extends State<PlanningPage> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                // Gunakan metode provider untuk menghapus planning
                                 planningData.removePlanning(planning);
                               },
                             ),
