@@ -233,7 +233,6 @@ class _ExpensePageState extends State<ExpensePage> {
                                   selectedCategory == null ||
                                   selectedCategory!.isEmpty ||
                                   amountController.text.isEmpty) {
-                                // Validation failed
                                 return;
                               }
 
@@ -248,8 +247,6 @@ class _ExpensePageState extends State<ExpensePage> {
                                 'note': note,
                               };
                               expenseData.addExpense(expense);
-
-                              // Clear inputs after submission
                               dateController.clear();
                               amountController.clear();
                               noteController.clear();
@@ -290,7 +287,6 @@ class _ExpensePageState extends State<ExpensePage> {
               ),
             ),
             const Divider(height: 24.0, thickness: 2.0),
-            // Use the provider data for the expenses list
             ListView.builder(
               shrinkWrap: true,
               itemCount: expenseData.expenses.length,
@@ -304,8 +300,7 @@ class _ExpensePageState extends State<ExpensePage> {
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment:
-                          CrossAxisAlignment.start, // Added this line
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
                           width: 50,
@@ -364,9 +359,7 @@ class _ExpensePageState extends State<ExpensePage> {
                                 Icons.edit,
                                 color: Colors.white,
                               ),
-                              onPressed: () {
-                                // Add logic to edit expenses
-                              },
+                              onPressed: () {},
                             ),
                             const SizedBox(width: 8.0),
                             IconButton(
@@ -375,7 +368,6 @@ class _ExpensePageState extends State<ExpensePage> {
                                 color: Colors.white,
                               ),
                               onPressed: () {
-                                // Use the provider method to remove expense
                                 expenseData.removeExpense(expense);
                               },
                             ),
